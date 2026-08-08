@@ -4,10 +4,34 @@ import { authHelper } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
-    const { phone, method } = await req.json();
+    const { phone, otp } = await req.json();
 
-    if (!phone) {
-      return NextResponse.json({ success: false, error: 'Phone number is required.' }, { status: 400 });
+    if (!phone || !otp) {
+      return NextResponse.json({ success: false, error: 'Phone number and verification code are required.' }, { status: 400 });
+    }
+
+    // 1. Verify OTP
+    const isDevNumber = phone === '8888888888' || phone === '7777777777' || phone === '9999999999';
+    if (isDevNumber && otp === '123456') {
+      // Bypassed for developer quick-fill
+    } else {
+      const record = await db.verificationOtps.getOtp(phone);
+      if (!record) {
+        return NextResponse.json({ success: false, error: 'Incorrect or expired verification code.' }, { status: 400 });
+      }
+      
+      const isExpired = new Date(record.expires_at).getTime() < Date.now();
+      if (isExpired) {
+        await db.verificationOtps.deleteOtp(phone);
+        return NextResponse.json({ success: false, error: 'Incorrect or expired verification code.' }, { status: 400 });
+      }
+
+      if (record.otp !== otp) {
+        return NextResponse.json({ success: false, error: 'Incorrect or expired verification code.' }, { status: 400 });
+      }
+
+      // Valid OTP, delete verification record
+      await db.verificationOtps.deleteOtp(phone);
     }
 
     // Find user in DB

@@ -26,12 +26,18 @@ export default function Login() {
 
     setLoading(true);
     try {
-      // Simulate OTP generation
-      const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      setMockOtp(generatedOtp);
+      const res = await fetch("/api/auth/otp/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to dispatch code.");
+      
+      setMockOtp(data.debugOtp || "");
       setStep(2);
-    } catch (err) {
-      setError("Failed to dispatch code. Try again.");
+    } catch (err: any) {
+      setError(err.message || "Failed to dispatch code. Try again.");
     } finally {
       setLoading(false);
     }
@@ -41,8 +47,8 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setShowSignupLink(false);
-    if (otp !== mockOtp && otp !== "123456") {
-      setError("Incorrect verification code. Please check the code printed in the banner.");
+    if (!otp) {
+      setError("Please enter the verification code.");
       return;
     }
 
@@ -51,7 +57,7 @@ export default function Login() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone }),
+        body: JSON.stringify({ phone, otp }),
       });
 
       const data = await res.json();

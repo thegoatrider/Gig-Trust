@@ -407,5 +407,32 @@ export const db = {
       if (error) throw error;
       return newStrike;
     }
+  },
+  verificationOtps: {
+    saveOtp: async (phone: string, otp: string, expiresAt: Date): Promise<any> => {
+      const { data, error } = await supabase
+        .from('verification_otps')
+        .upsert({ phone, otp, expires_at: expiresAt.toISOString() })
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    getOtp: async (phone: string): Promise<any> => {
+      const { data, error } = await supabase
+        .from('verification_otps')
+        .select('*')
+        .eq('phone', phone)
+        .maybeSingle();
+      if (error) throw error;
+      return data || undefined;
+    },
+    deleteOtp: async (phone: string): Promise<void> => {
+      const { error } = await supabase
+        .from('verification_otps')
+        .delete()
+        .eq('phone', phone);
+      if (error) throw error;
+    }
   }
 };

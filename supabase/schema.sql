@@ -195,3 +195,11 @@ create policy "Anyone can view open jobs" on public.jobs
 
 create policy "Employers can manage their own jobs" on public.jobs
   for all using (employer_id = auth.uid());
+
+-- 11. Verification OTPs Table
+create table if not exists public.verification_otps (
+  phone text primary key,
+  otp text not null,
+  expires_at timestamp with time zone not null,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
