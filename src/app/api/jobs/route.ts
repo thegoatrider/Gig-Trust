@@ -83,3 +83,34 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: e.message || 'Failed to post job' }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const session = authHelper.getSession(req);
+    if (!session || session.role !== 'employer') {
+      return NextResponse.json({ success: false, error: 'Unauthorized session.' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    if (!id) {
+      return NextResponse.json({ success: false, error: 'Job ID is required.' }, { status: 400 });
+    }
+
+    // Check if the job belongs to this employer
+    const job = await db.jobs.findById(id);
+    if (!job) {
+      return NextResponse.json({ success: false, error: 'Job not found.' }, { status: 404 });
+    }
+    if (job.employer_id !== session.userId) {
+      return NextResponse.json({ success: false, error: 'Access denied.' }, { status: 403 });
+    }
+
+    // Cancel the job status in DB
+    const updated = await db.jobs.update(id, { status: 'cancelled' });
+    return NextResponse.json({ success: true, job: updated });
+  } catch (e: any) {
+    return NextResponse.json({ success: false, error: e.message || 'Failed to cancel job' }, { status: 500 });
+  }
+}
+

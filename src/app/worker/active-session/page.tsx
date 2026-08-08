@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { 
   ArrowLeft, Clock, ShieldAlert, Camera, MapPin, CheckCircle2, 
-  AlertTriangle, RefreshCw, Smartphone, QrCode 
+  AlertTriangle, RefreshCw, Smartphone, QrCode, Briefcase, Search, Coins, User 
 } from "lucide-react";
 
 export default function ActiveSession() {
@@ -186,212 +186,248 @@ export default function ActiveSession() {
   const pendingApp = applications.find((a: any) => a.status === 'applied' || a.status === 'shortlisted' || a.status === 'accepted');
 
   return (
-    <div className="min-h-screen text-slate-200 bg-slate-950 font-sans pb-16">
-      {/* Header */}
-      <header className="glass-panel sticky top-0 z-40 border-b border-white/5 backdrop-blur px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-[#E5E7EB] sm:py-6 flex justify-center text-gray-900">
+      {/* Phone Emulator wrapper */}
+      <div className="w-full max-w-md bg-[#F6F7F9] min-h-screen sm:min-h-[850px] sm:max-h-[900px] sm:rounded-[40px] shadow-2xl border border-gray-200/80 flex flex-col relative overflow-hidden pb-20">
+        
+        {/* Top Notch simulation */}
+        <div className="hidden sm:block absolute top-0 inset-x-0 h-7 bg-black z-50 rounded-t-[40px] flex items-center justify-between px-6 text-white text-[10px] font-semibold">
+          <span>9:41</span>
+          <div className="w-20 h-4 bg-[#111111] rounded-full mx-auto -mt-0.5" />
+          <div className="flex gap-1">
+            <span>5G</span>
+            <span className="w-3 h-2 border border-white rounded-sm" />
+          </div>
+        </div>
+
+        {/* Header */}
+        <header className="sticky top-0 sm:top-7 z-40 bg-[#F6F7F9] border-b border-gray-100 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/worker/dashboard" className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-white">
+            <Link href="/worker/dashboard" className="p-1.5 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-gray-900">
               <ArrowLeft className="w-4 h-4" />
             </Link>
-            <h1 className="text-xl font-bold font-outfit text-white">Live Attendance Control</h1>
+            <h1 className="text-lg font-bold font-outfit text-gray-900">Attendance Clock</h1>
           </div>
-          <button onClick={fetchSession} className="p-2 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10">
-            <RefreshCw className="w-4 h-4 text-slate-400 hover:text-white" />
+          <button onClick={fetchSession} className="p-1.5 hover:bg-gray-100 rounded-full">
+            <RefreshCw className="w-4 h-4 text-gray-500 hover:text-gray-900" />
           </button>
-        </div>
-      </header>
+        </header>
 
-      <main className="max-w-3xl mx-auto px-6 pt-8 space-y-6">
-        {error && (
-          <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-400 flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 shrink-0" /> {error}
-          </div>
-        )}
-        {success && (
-          <div className="p-4 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-400 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0" /> {success}
-          </div>
-        )}
-
-        {/* 1. CHECKED-IN SCREEN */}
-        {activeSession ? (
-          <div className="space-y-6 animate-fade-in">
-            {/* Timer HUD */}
-            <div className="glass-panel p-8 rounded-3xl text-center border-l-4 border-l-violet-500 space-y-4">
-              <div className="text-xs text-violet-400 font-bold uppercase tracking-wider">Session Time Elapsed</div>
-              <div className="text-6xl font-mono font-extrabold text-white tracking-widest">
-                {formatTime(elapsedSeconds)}
-              </div>
-              <p className="text-xs text-slate-400">
-                Job: <strong className="text-white">{activeSession.jobTitle}</strong>
-              </p>
+        {/* Scrollable Main Area */}
+        <main className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-700 flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0 text-red-650" /> {error}
             </div>
-
-            {/* Safety SOS Panic Button */}
-            <div className="glass-panel p-6 rounded-2xl border border-red-500/20 bg-red-950/5 text-center space-y-4">
-              <div className="flex flex-col items-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping mb-2"></div>
-                <h3 className="text-sm font-bold text-red-400 uppercase tracking-widest">Active Safety Shield</h3>
-              </div>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                Pressing the SOS triggers immediate push alerts to platform admin servers and dispatches coordinates to your 3 guardians.
-              </p>
-              
-              <button
-                type="button"
-                onClick={handleSOS}
-                className="w-28 h-28 rounded-full bg-gradient-to-tr from-red-700 to-rose-600 hover:from-red-600 hover:to-rose-500 text-white font-extrabold text-xl shadow-lg shadow-red-500/25 border-4 border-red-950/40 mx-auto block active:scale-95 transition-all glow-pulse"
-              >
-                SOS
-              </button>
+          )}
+          {success && (
+            <div className="p-3 bg-emerald-50 border border-emerald-250 rounded-2xl text-xs text-emerald-700 font-semibold flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" /> {success}
             </div>
+          )}
 
-            {/* Selfie Verification Checks */}
-            <div className="glass-panel p-6 rounded-2xl border border-white/5 space-y-4">
-              <div className="flex items-center gap-2">
-                <Camera className="w-5 h-5 text-violet-400" />
-                <h3 className="text-sm font-bold text-white">Attendance Verification Checks</h3>
-              </div>
-              <p className="text-xs text-slate-400">
-                AI Face Match checks are triggered randomly during active tasks to prevent substitute workers.
-              </p>
-
-              <div className="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-white/5">
-                <div>
-                  <span className="text-xs text-slate-300 font-bold block">Random Selfie Check-in</span>
-                  <span className="text-[10px] text-slate-500">Status: {selfieStatus}</span>
+          {/* 1. CHECKED-IN SCREEN */}
+          {activeSession ? (
+            <div className="space-y-5 animate-fade-in">
+              {/* Timer HUD */}
+              <div className="bg-white p-6 rounded-[28px] text-center border-l-4 border-l-violet-500 shadow-sm space-y-3">
+                <div className="text-[10px] text-violet-650 font-bold uppercase tracking-wider">Session Time Elapsed</div>
+                <div className="text-5xl font-mono font-black text-gray-900 tracking-wider">
+                  {formatTime(elapsedSeconds)}
                 </div>
-
-                {selfieStatus === 'verified' ? (
-                  <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-semibold">
-                    Score: {selfieScore}% Verified
-                  </span>
-                ) : (
-                  <button
-                    type="button"
-                    disabled={selfieStatus === 'verifying'}
-                    onClick={handleSelfieVerify}
-                    className="bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
-                  >
-                    {selfieStatus === 'verifying' ? "Comparing..." : "Submit Photo check"}
-                  </button>
-                )}
+                <p className="text-xs text-gray-500">
+                  Gig: <strong className="text-gray-900">{activeSession.jobTitle}</strong>
+                </p>
               </div>
-            </div>
 
-            {/* Checkout control */}
-            <button
-              onClick={handleCheckOut}
-              className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl border border-white/5 shadow-lg flex items-center justify-center gap-2 transition-all"
-            >
-              Stop session & Check Out
-            </button>
-          </div>
-        ) : (
-          /* 2. CHECK-IN SCREEN */
-          <div className="glass-panel p-8 rounded-2xl border border-white/5 space-y-8 animate-fade-in">
-            <div>
-              <h3 className="text-lg font-bold text-white mb-2">Check-in Verification Gating</h3>
-              <p className="text-xs text-slate-400">Select your check-in code method. Requires physical geofence verification validation.</p>
-            </div>
+              {/* Safety SOS Panic Button */}
+              <div className="bg-red-50 p-6 rounded-[28px] border border-red-200 text-center space-y-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping mb-1.5"></div>
+                  <h3 className="text-xs font-bold text-red-700 uppercase tracking-wider">Active Safety Shield</h3>
+                </div>
+                <p className="text-[10px] text-gray-500 max-w-xs mx-auto leading-normal">
+                  SOS triggers push alerts to safety servers and dispatches coordinate logs to listed guardians.
+                </p>
+                
+                <button
+                  type="button"
+                  onClick={handleSOS}
+                  className="w-24 h-24 rounded-full bg-red-600 hover:bg-red-700 text-white font-black text-lg border-4 border-white shadow-md mx-auto block active:scale-95 transition-all animate-pulse"
+                >
+                  SOS
+                </button>
+              </div>
 
-            {/* Check-In Tab buttons */}
-            <div className="grid grid-cols-2 gap-4 border-b border-white/5 pb-4">
-              <button
-                type="button"
-                onClick={() => setCheckInMethod('otp')}
-                className={`py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
-                  checkInMethod === 'otp'
-                    ? 'bg-violet-500/15 text-violet-400 border border-violet-500/30'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <Smartphone className="w-4 h-4" /> OTP check-in code
-              </button>
-              <button
-                type="button"
-                onClick={() => setCheckInMethod('qr')}
-                className={`py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
-                  checkInMethod === 'qr'
-                    ? 'bg-violet-500/15 text-violet-400 border border-violet-500/30'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <QrCode className="w-4 h-4" /> QR check-in token
-              </button>
-            </div>
+              {/* Selfie Verification Checks */}
+              <div className="bg-white p-5 rounded-[28px] border border-gray-100 shadow-sm space-y-3">
+                <div className="flex items-center gap-2">
+                  <Camera className="w-4 h-4 text-violet-600" />
+                  <h3 className="text-xs font-bold text-gray-900 uppercase">Selfie Verification Checks</h3>
+                </div>
+                <p className="text-[10px] text-gray-500 leading-normal">
+                  Face Match checks are triggered randomly during active tasks to prevent proxy workers.
+                </p>
 
-            {checkInMethod === 'otp' ? (
-              <form onSubmit={handleCheckIn} className="space-y-6">
-                {/* OTP check-in Code */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                    Check-in OTP Code (Generated for hired application)
-                  </label>
-                  <input 
-                    type="text" 
-                    maxLength={4}
-                    value={inputOtp}
-                    onChange={(e) => setInputOtp(e.target.value.replace(/\D/g, ""))}
-                    placeholder="Enter 4-Digit OTP" 
-                    className="w-full glass-input text-center text-xl font-bold tracking-widest"
-                  />
-                  {pendingApp && (
-                    <div className="mt-2 text-center text-[10px] text-violet-400 bg-violet-950/40 p-2 border border-violet-500/20 rounded-lg">
-                      Demo OTP Code: <strong className="text-white">{pendingApp.otp}</strong> (Provided in this sandbox)
-                    </div>
+                <div className="flex items-center justify-between p-3.5 bg-gray-50 rounded-2xl border border-gray-100 gap-2">
+                  <div>
+                    <span className="text-xs text-gray-700 font-bold block">Random Selfie Check</span>
+                    <span className="text-[9px] text-gray-400 font-semibold block capitalize mt-0.5">Status: {selfieStatus}</span>
+                  </div>
+
+                  {selfieStatus === 'verified' ? (
+                    <span className="px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg text-[10px] font-bold">
+                      {selfieScore}% Face Matched
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={selfieStatus === 'verifying'}
+                      onClick={handleSelfieVerify}
+                      className="bg-violet-600 hover:bg-violet-755 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50"
+                    >
+                      {selfieStatus === 'verifying' ? "Verifying..." : "Verify Face"}
+                    </button>
                   )}
                 </div>
-
-                {/* GPS Coordinates coordinates check */}
-                <div className="space-y-3">
-                  <label className="block text-xs font-semibold text-slate-400">
-                    Verify Coordinate location check
-                  </label>
-                  <div className="grid grid-cols-2 gap-4">
-                    <input 
-                      type="number" 
-                      step="any"
-                      value={workerLat}
-                      onChange={(e) => setWorkerLat(parseFloat(e.target.value))}
-                      className="glass-input text-xs" 
-                    />
-                    <input 
-                      type="number" 
-                      step="any"
-                      value={workerLng}
-                      onChange={(e) => setWorkerLng(parseFloat(e.target.value))}
-                      className="glass-input text-xs" 
-                    />
-                  </div>
-                  <p className="text-[10px] text-slate-500">
-                    We will calculate distance to check if you are within 200m of MG Road (12.9716, 77.5946).
-                  </p>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-violet-600 hover:bg-violet-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all"
-                >
-                  Verify check-in & Start clock timer
-                </button>
-              </form>
-            ) : (
-              <div className="text-center py-6 space-y-4">
-                <div className="w-44 h-44 bg-white p-3 rounded-2xl mx-auto flex items-center justify-center shadow">
-                  <QrCode className="w-full h-full text-slate-900" />
-                </div>
-                <div>
-                  <span className="text-xs text-slate-300 font-bold block">Check-in QR Code Scanner</span>
-                  <span className="text-[10px] text-slate-500 mt-1">Show this QR to the employer to check-in your session.</span>
-                </div>
               </div>
-            )}
-          </div>
-        )}
-      </main>
+
+              {/* Checkout control */}
+              <button
+                onClick={handleCheckOut}
+                className="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl shadow-sm flex items-center justify-center gap-1.5 text-xs transition-colors"
+              >
+                Stop session & Check Out
+              </button>
+            </div>
+          ) : (
+            /* 2. CHECK-IN SCREEN */
+            <div className="bg-white p-5 rounded-[28px] border border-gray-100 shadow-sm space-y-6 animate-fade-in">
+              <div>
+                <h3 className="text-base font-bold text-gray-900 mb-1.5">Check-in Gating</h3>
+                <p className="text-xs text-gray-500 leading-normal">Select verification method. Physical geofence limits check-in bounds.</p>
+              </div>
+
+              {/* Check-In Tab buttons */}
+              <div className="grid grid-cols-2 gap-3 border-b border-gray-50 pb-3">
+                <button
+                  type="button"
+                  onClick={() => setCheckInMethod('otp')}
+                  className={`py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                    checkInMethod === 'otp'
+                      ? 'bg-violet-50 text-violet-700 border border-violet-300'
+                      : 'text-gray-500 hover:text-gray-800'
+                  }`}
+                >
+                  <Smartphone className="w-4 h-4" /> Enter OTP code
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCheckInMethod('qr')}
+                  className={`py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                    checkInMethod === 'qr'
+                      ? 'bg-violet-50 text-violet-700 border border-violet-300'
+                      : 'text-gray-500 hover:text-gray-800'
+                  }`}
+                >
+                  <QrCode className="w-4 h-4" /> Show QR code
+                </button>
+              </div>
+
+              {checkInMethod === 'otp' ? (
+                <form onSubmit={handleCheckIn} className="space-y-5">
+                  {/* OTP check-in Code */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                      Check-in OTP Code (From Employer)
+                    </label>
+                    <input 
+                      type="text" 
+                      maxLength={4}
+                      value={inputOtp}
+                      onChange={(e) => setInputOtp(e.target.value.replace(/\D/g, ""))}
+                      placeholder="Enter 4-Digit OTP" 
+                      className="w-full glass-input text-center text-xl font-black tracking-widest py-2"
+                    />
+                    {pendingApp && (
+                      <div className="mt-2 text-center text-[10px] text-violet-750 bg-violet-50 p-2 border border-violet-100 rounded-xl font-bold">
+                        Demo OTP Code: <strong className="text-violet-900">{pendingApp.otp}</strong>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* GPS Coordinates check */}
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                      Coordinates verification
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <input 
+                        type="number" 
+                        step="any"
+                        value={workerLat}
+                        onChange={(e) => setWorkerLat(parseFloat(e.target.value))}
+                        className="glass-input text-xs bg-gray-50" 
+                      />
+                      <input 
+                        type="number" 
+                        step="any"
+                        value={workerLng}
+                        onChange={(e) => setWorkerLng(parseFloat(e.target.value))}
+                        className="glass-input text-xs bg-gray-50" 
+                      />
+                    </div>
+                    <p className="text-[9px] text-gray-400 font-semibold leading-relaxed">
+                      Distance restriction: Must be within 200m of MG Road location (12.9716, 77.5946).
+                    </p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-violet-600 hover:bg-violet-755 text-white font-bold py-3 rounded-xl shadow-sm transition-all text-xs"
+                  >
+                    Verify & Check In
+                  </button>
+                </form>
+              ) : (
+                <div className="text-center py-4 space-y-3">
+                  <div className="w-36 h-36 bg-gray-50 p-3 rounded-2xl mx-auto flex items-center justify-center border border-gray-150 shadow-sm">
+                    <QrCode className="w-full h-full text-gray-900" />
+                  </div>
+                  <div>
+                    <span className="text-xs text-gray-800 font-bold block">Check-in QR Scanner</span>
+                    <span className="text-[10px] text-gray-400 mt-1 block">Show this QR to the employer to check-in your session.</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </main>
+
+        {/* persistent navigation bar */}
+        <nav className="absolute bottom-0 inset-x-0 h-20 bg-white border-t border-gray-100 flex items-center justify-around px-2 z-40">
+          <Link href="/worker/dashboard" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-900">
+            <Briefcase className="w-5 h-5 text-gray-900" />
+            <span className="text-[10px] font-extrabold">Jobs</span>
+          </Link>
+          
+          <Link href="/worker/jobs" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900 transition-colors">
+            <Search className="w-5 h-5" />
+            <span className="text-[10px] font-bold">Browse</span>
+          </Link>
+
+          <Link href="/worker/earnings" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900 transition-colors">
+            <Coins className="w-5 h-5" />
+            <span className="text-[10px] font-bold">Wallet</span>
+          </Link>
+
+          <Link href="/worker/onboarding" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900 transition-colors">
+            <User className="w-5 h-5" />
+            <span className="text-[10px] font-bold">Profile</span>
+          </Link>
+        </nav>
+      </div>
     </div>
   );
 }

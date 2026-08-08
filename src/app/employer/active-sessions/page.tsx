@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { 
   ArrowLeft, Clock, ShieldCheck, MapPin, CheckCircle, 
-  XOctagon, AlertTriangle, RefreshCw, AlertCircle, ShieldAlert 
+  XOctagon, AlertTriangle, RefreshCw, AlertCircle, ShieldAlert, Briefcase, PlusCircle, Wallet, User 
 } from "lucide-react";
 
 export default function EmployerActiveSessions() {
@@ -102,146 +102,181 @@ export default function EmployerActiveSessions() {
   };
 
   return (
-    <div className="min-h-screen text-slate-200 bg-slate-950 font-sans pb-16">
-      {/* Header */}
-      <header className="glass-panel sticky top-0 z-40 border-b border-white/5 backdrop-blur px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-[#E5E7EB] sm:py-6 flex justify-center text-gray-900">
+      {/* Phone Emulator wrapper */}
+      <div className="w-full max-w-md bg-[#F6F7F9] min-h-screen sm:min-h-[850px] sm:max-h-[900px] sm:rounded-[40px] shadow-2xl border border-gray-200/80 flex flex-col relative overflow-hidden pb-20">
+        
+        {/* Top Notch simulation */}
+        <div className="hidden sm:block absolute top-0 inset-x-0 h-7 bg-black z-50 rounded-t-[40px] flex items-center justify-between px-6 text-white text-[10px] font-semibold">
+          <span>9:41</span>
+          <div className="w-20 h-4 bg-[#111111] rounded-full mx-auto -mt-0.5" />
+          <div className="flex gap-1">
+            <span>5G</span>
+            <span className="w-3 h-2 border border-white rounded-sm" />
+          </div>
+        </div>
+
+        {/* Header */}
+        <header className="sticky top-0 sm:top-7 z-40 bg-[#F6F7F9] border-b border-gray-100 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/employer/dashboard" className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-white">
+            <Link href="/employer/dashboard" className="p-1.5 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-gray-900">
               <ArrowLeft className="w-4 h-4" />
             </Link>
-            <h1 className="text-xl font-bold font-outfit text-white">Live Tracking Clocks</h1>
+            <h1 className="text-lg font-bold font-outfit text-gray-900">Tracking Clocks</h1>
           </div>
-          <button onClick={fetchSessions} className="p-2 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10">
-            <RefreshCw className="w-4 h-4 text-slate-400 hover:text-white" />
+          <button onClick={fetchSessions} className="p-1.5 hover:bg-gray-100 rounded-full">
+            <RefreshCw className="w-4 h-4 text-gray-500 hover:text-gray-900" />
           </button>
-        </div>
-      </header>
+        </header>
 
-      <main className="max-w-4xl mx-auto px-6 pt-8 space-y-6">
-        {error && (
-          <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-400 flex items-start gap-2.5 animate-slide-up">
-            <ShieldAlert className="w-5 h-5 shrink-0 text-red-400" />
-            <div>
-              <strong className="font-bold block mb-1">Alert Triggered</strong>
-              {error}
+        {/* Scrollable Main Area */}
+        <main className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+          {error && (
+            <div className="p-4 bg-red-55 border border-red-200 rounded-2xl text-xs text-red-700 flex items-start gap-2.5">
+              <ShieldAlert className="w-5 h-5 shrink-0 text-red-650" />
+              <div>
+                <strong className="font-bold block mb-1">Alert Triggered</strong>
+                {error}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {success && (
-          <div className="p-4 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-400 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-emerald-400" /> {success}
-          </div>
-        )}
+          {success && (
+            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs text-emerald-700 font-semibold flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-650" /> {success}
+            </div>
+          )}
 
-        {activeSessions.length === 0 ? (
-          <div className="glass-panel p-12 text-center text-slate-500 text-xs rounded-2xl border border-white/5">
-            <Clock className="w-12 h-12 text-slate-700 mx-auto mb-4 animate-pulse-slow" />
-            No running worker clocks detected. Once hired workers check-in using OTP/QR, they will appear here.
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {activeSessions.map((ses: any, idx: number) => {
-              const trialRem = getTrialMinutesRemaining(ses.check_in_time, ses.trialMinutes);
-              const inTrial = trialRem > 0;
-              const isCheckingOut = ses.timer_status === 'completed';
+          {activeSessions.length === 0 ? (
+            <div className="bg-white p-12 text-center text-gray-450 text-xs rounded-3xl border border-gray-100 shadow-sm space-y-4">
+              <Clock className="w-10 h-10 text-gray-350 mx-auto animate-pulse-slow" />
+              <p>No active sessions found.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {activeSessions.map((ses: any, idx: number) => {
+                const trialRem = getTrialMinutesRemaining(ses.check_in_time, ses.trialMinutes);
+                const inTrial = trialRem > 0;
+                const isCheckingOut = ses.timer_status === 'completed';
 
-              return (
-                <div key={idx} className="glass-panel p-6 rounded-2xl border border-white/5 space-y-6">
-                  {/* Worker header */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
-                    <div>
-                      <div className="flex items-center gap-2.5">
-                        <h3 className="font-bold text-white text-base">{ses.workerName.toUpperCase()}</h3>
-                        <span className={`px-2.5 py-0.5 rounded text-[9px] font-bold uppercase ${getBadgeColor(ses.workerKycStatus)}`}>
-                          {ses.workerKycStatus}
-                        </span>
-                        <span className="text-[10px] text-slate-400">Score: {ses.workerTrustScore}</span>
+                return (
+                  <div key={idx} className="bg-white p-5 rounded-[28px] border border-gray-100 shadow-sm space-y-5">
+                    {/* Worker header */}
+                    <div className="flex justify-between items-start gap-3 border-b border-gray-50 pb-3">
+                      <div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h3 className="font-extrabold text-gray-900 text-sm">{ses.workerName.toUpperCase()}</h3>
+                          <span className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider ${getBadgeColor(ses.workerKycStatus)}`}>
+                            {ses.workerKycStatus}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-gray-500 mt-1">
+                          Gig: <strong className="text-gray-900">{ses.jobTitle}</strong>
+                        </p>
                       </div>
-                      <p className="text-xs text-slate-400 mt-1">
-                        Active Job: <strong className="text-white">{ses.jobTitle}</strong>
-                      </p>
-                    </div>
 
-                    <div className="text-right">
-                      <span className="text-xs text-slate-400 uppercase tracking-widest font-bold block mb-1">Stopwatch Clock</span>
-                      <span className="text-xl font-mono font-bold text-white">
-                        {isCheckingOut ? 'Checkout Requested' : 'Timer Running'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Tracking parameters */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs">
-                    {/* Geofence status */}
-                    <div className="p-3 bg-white/5 rounded-xl border border-white/5">
-                      <span className="text-[10px] text-slate-500 block uppercase tracking-wider mb-1">Geofence Check</span>
-                      {ses.geofence_ok ? (
-                        <span className="text-emerald-400 font-bold flex items-center gap-1">✓ Geofence OK (Within 200m)</span>
-                      ) : (
-                        <span className="text-red-400 font-bold flex items-center gap-1">🚨 Out of Bounds</span>
-                      )}
-                    </div>
-
-                    {/* Clocked check-in time */}
-                    <div className="p-3 bg-white/5 rounded-xl border border-white/5">
-                      <span className="text-[10px] text-slate-500 block uppercase tracking-wider mb-1">Check-in Time</span>
-                      <span className="text-slate-300 font-semibold">
-                        {new Date(ses.check_in_time).toLocaleTimeString()}
-                      </span>
-                    </div>
-
-                    {/* Trial status */}
-                    <div className="p-3 bg-white/5 rounded-xl border border-white/5 col-span-2 md:col-span-1">
-                      <span className="text-[10px] text-slate-500 block uppercase tracking-wider mb-1">Trial Period Status</span>
-                      {inTrial ? (
-                        <span className="text-amber-400 font-bold flex items-center gap-1 animate-pulse">
-                          <Clock className="w-3.5 h-3.5" /> {trialRem} mins remaining
+                      <div className="text-right shrink-0">
+                        <span className="text-[9px] text-gray-450 uppercase tracking-wider block font-bold mb-0.5">Status</span>
+                        <span className={`text-xs font-bold ${isCheckingOut ? 'text-[#EA580C]' : 'text-violet-600'}`}>
+                          {isCheckingOut ? 'Checkout Ready' : 'Timer Running'}
                         </span>
-                      ) : (
-                        <span className="text-slate-500 font-semibold">Trial Expired (Full Escrow due)</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Actions buttons */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-white/5">
-                    <div className="text-[10px] text-slate-400 max-w-md">
-                      {inTrial 
-                        ? "Ending session now triggers the trial cutoff policy (pays 20% minimum rate)." 
-                        : "Full escrow amount of ₹" + ses.jobRate + " is locked and due for release upon completion."
-                      }
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-3 justify-end">
-                      {inTrial && (
+                    {/* Tracking parameters */}
+                    <div className="grid grid-cols-2 gap-3 text-[10px]">
+                      {/* Geofence status */}
+                      <div className="p-3 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span className="text-[8px] text-gray-400 block uppercase tracking-wider mb-0.5">Geofence Check</span>
+                        {ses.geofence_ok ? (
+                          <span className="text-emerald-650 font-bold">✓ Geofence Safe</span>
+                        ) : (
+                          <span className="text-red-650 font-bold">🚨 Out of Bounds</span>
+                        )}
+                      </div>
+
+                      {/* Clocked check-in time */}
+                      <div className="p-3 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span className="text-[8px] text-gray-400 block uppercase tracking-wider mb-0.5">Check-in Clock</span>
+                        <span className="text-gray-700 font-bold">
+                          {new Date(ses.check_in_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+
+                      {/* Trial status */}
+                      <div className="p-3 bg-gray-50 rounded-2xl border border-gray-100 col-span-2">
+                        <span className="text-[8px] text-gray-400 block uppercase tracking-wider mb-0.5">Trial Window</span>
+                        {inTrial ? (
+                          <span className="text-[#EA580C] font-bold flex items-center gap-1 animate-pulse">
+                            <Clock className="w-3.5 h-3.5" /> {trialRem} mins remaining
+                          </span>
+                        ) : (
+                          <span className="text-gray-500 font-medium">Trial Expired (Full Escrow Cover active)</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Actions buttons */}
+                    <div className="flex flex-col gap-3 pt-3 border-t border-gray-50">
+                      <div className="text-[9px] text-gray-450 leading-relaxed">
+                        {inTrial 
+                          ? "Ending session now triggers trial cutoff (pays 20% minimum coverage)." 
+                          : "Full escrow amount of ₹" + ses.jobRate + " is locked and due for release."
+                        }
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {inTrial && (
+                          <button
+                            type="button"
+                            disabled={actionLoadingId === ses.id}
+                            onClick={() => handleTrialCutoff(ses.id)}
+                            className="flex-1 py-2 border border-red-200 bg-red-50 hover:bg-red-100 text-red-750 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1"
+                          >
+                            <XOctagon className="w-3.5 h-3.5" /> Trial Cutoff
+                          </button>
+                        )}
+
                         <button
                           type="button"
                           disabled={actionLoadingId === ses.id}
-                          onClick={() => handleTrialCutoff(ses.id)}
-                          className="py-2 px-4 rounded-xl border border-red-500/20 bg-red-950/20 hover:bg-red-950/40 text-red-400 text-xs font-bold transition-all flex items-center gap-1"
+                          onClick={() => handleReleaseEscrow(ses.id)}
+                          className="flex-1 py-2 bg-violet-600 hover:bg-violet-755 text-white font-bold text-xs transition-all flex items-center justify-center gap-1 rounded-xl shadow-sm"
                         >
-                          <XOctagon className="w-4 h-4" /> End Session (Trial Cutoff)
+                          <CheckCircle className="w-3.5 h-3.5" /> Release Escrow
                         </button>
-                      )}
-
-                      <button
-                        type="button"
-                        disabled={actionLoadingId === ses.id}
-                        onClick={() => handleReleaseEscrow(ses.id)}
-                        className="py-2.5 px-6 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-all flex items-center gap-1 shadow-lg shadow-amber-500/10"
-                      >
-                        <CheckCircle className="w-4 h-4" /> Approve & Release Payout
-                      </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </main>
+                );
+              })}
+            </div>
+          )}
+        </main>
+
+        {/* persistent navigation bar */}
+        <nav className="absolute bottom-0 inset-x-0 h-20 bg-white border-t border-gray-100 flex items-center justify-around px-2 z-40">
+          <Link href="/employer/dashboard" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900 transition-colors">
+            <Briefcase className="w-5 h-5" />
+            <span className="text-[10px] font-bold">Jobs</span>
+          </Link>
+          
+          <Link href="/employer/post-job" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900 transition-colors">
+            <PlusCircle className="w-5 h-5" />
+            <span className="text-[10px] font-bold">Post</span>
+          </Link>
+
+          <Link href="/employer/active-sessions" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-900">
+            <Wallet className="w-5 h-5 text-gray-900" />
+            <span className="text-[10px] font-extrabold">Wallet</span>
+          </Link>
+
+          <Link href="/employer/onboarding" className="flex-1 flex flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900 transition-colors">
+            <User className="w-5 h-5" />
+            <span className="text-[10px] font-bold">Profile</span>
+          </Link>
+        </nav>
+      </div>
     </div>
   );
 }

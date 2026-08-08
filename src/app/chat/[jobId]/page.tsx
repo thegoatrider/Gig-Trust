@@ -66,83 +66,97 @@ export default function ChatPage({ params }: { params: { jobId: string } }) {
   };
 
   return (
-    <div className="min-h-screen text-slate-200 bg-slate-950 flex flex-col font-sans">
-      {/* Header */}
-      <header className="glass-panel border-b border-white/5 backdrop-blur px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={() => router.back()} 
-            className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </button>
-          <div>
-            <h1 className="font-bold text-white text-sm">{counterpartyName}</h1>
-            <p className="text-[10px] text-slate-400">Gig: {jobTitle}</p>
+    <div className="min-h-screen bg-[#E5E7EB] sm:py-6 flex justify-center text-gray-900">
+      {/* Phone Emulator wrapper */}
+      <div className="w-full max-w-md bg-[#F6F7F9] min-h-screen sm:min-h-[850px] sm:max-h-[900px] sm:rounded-[40px] shadow-2xl border border-gray-200/80 flex flex-col relative overflow-hidden">
+        
+        {/* Top Notch simulation */}
+        <div className="hidden sm:block absolute top-0 inset-x-0 h-7 bg-black z-50 rounded-t-[40px] flex items-center justify-between px-6 text-white text-[10px] font-semibold">
+          <span>9:41</span>
+          <div className="w-20 h-4 bg-[#111111] rounded-full mx-auto -mt-0.5" />
+          <div className="flex gap-1">
+            <span>5G</span>
+            <span className="w-3 h-2 border border-white rounded-sm" />
           </div>
         </div>
 
-        {bookingConfirmed ? (
-          <div className="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full flex items-center gap-1.5 font-bold">
-            <PhoneCall className="w-3.5 h-3.5" /> Contact unlocked
+        {/* Header */}
+        <header className="sticky top-0 sm:top-7 z-40 bg-[#F6F7F9] border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => router.back()} 
+              className="p-1.5 hover:bg-gray-100 rounded-full text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <div>
+              <h1 className="font-extrabold text-gray-900 text-xs">{counterpartyName}</h1>
+              <p className="text-[9px] text-gray-450 font-semibold">Gig: {jobTitle}</p>
+            </div>
           </div>
-        ) : (
-          <div className="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full flex items-center gap-1.5 font-semibold">
-            <PhoneOff className="w-3.5 h-3.5" /> Numbers Gated
+
+          {bookingConfirmed ? (
+            <div className="text-[9px] text-emerald-705 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1 font-bold">
+              <PhoneCall className="w-3 h-3 text-emerald-600" /> Unlocked
+            </div>
+          ) : (
+            <div className="text-[9px] text-amber-705 bg-amber-50 border border-amber-205 px-2.5 py-0.5 rounded-full flex items-center gap-1 font-bold">
+              <PhoneOff className="w-3 h-3 text-amber-600" /> Gated
+            </div>
+          )}
+        </header>
+
+        {/* Safety Notice */}
+        {!bookingConfirmed && (
+          <div className="bg-violet-50 border-b border-violet-100 p-2.5 text-center text-[9px] text-violet-750 flex items-center justify-center gap-1.5 font-bold">
+            <ShieldAlert className="w-3.5 h-3.5 text-violet-600 shrink-0" />
+            Exchange of phone numbers is restricted until hiring is confirmed.
           </div>
         )}
-      </header>
 
-      {/* Safety Notice */}
-      {!bookingConfirmed && (
-        <div className="bg-violet-950/20 border-b border-violet-500/10 p-3 text-center text-[10px] text-violet-400 flex items-center justify-center gap-1.5">
-          <ShieldAlert className="w-4 h-4 text-violet-400" />
-          Safety Protocol: Exchange of phone numbers and email is restricted until hiring is finalized and escrow is locked.
-        </div>
-      )}
-
-      {/* Messages Feed */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 max-w-3xl mx-auto w-full">
-        {messages.map((msg) => {
-          const isMe = msg.sender === 'me';
-          return (
-            <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-              <div 
-                className={`max-w-md p-4 rounded-2xl text-xs space-y-1.5 shadow ${
-                  isMe 
-                    ? 'bg-violet-600 text-white rounded-tr-none' 
-                    : 'glass-panel text-slate-200 border border-white/5 rounded-tl-none'
-                }`}
-              >
-                <p className="leading-relaxed">{filterPhoneNumbers(msg.text)}</p>
-                <div className="flex items-center justify-end gap-1 text-[9px] text-slate-400">
-                  <span>{msg.time}</span>
-                  {isMe && <CheckCheck className="w-3 h-3 text-violet-300" />}
+        {/* Messages Feed */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F6F7F9]">
+          {messages.map((msg) => {
+            const isMe = msg.sender === 'me';
+            return (
+              <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+                <div 
+                  className={`max-w-[80%] p-3.5 rounded-2xl text-xs space-y-1 shadow-sm ${
+                    isMe 
+                      ? 'bg-violet-600 text-white rounded-tr-none' 
+                      : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none'
+                  }`}
+                >
+                  <p className="leading-relaxed font-semibold">{filterPhoneNumbers(msg.text)}</p>
+                  <div className="flex items-center justify-end gap-1 text-[8px] text-gray-400">
+                    <span>{msg.time}</span>
+                    {isMe && <CheckCheck className="w-3 h-3 text-violet-200" />}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      {/* Footer message composer input */}
-      <footer className="glass-panel border-t border-white/5 p-4 sticky bottom-0">
-        <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto flex gap-4">
-          <input 
-            type="text" 
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Type your message..." 
-            className="flex-1 glass-input text-xs"
-          />
-          <button 
-            type="submit"
-            className="bg-violet-600 hover:bg-violet-500 text-white p-3 rounded-xl transition-colors shadow-lg shadow-violet-500/10"
-          >
-            <Send className="w-4 h-4" />
-          </button>
-        </form>
-      </footer>
+        {/* Footer message composer input */}
+        <footer className="bg-white border-t border-gray-100 p-3.5 sticky bottom-0">
+          <form onSubmit={handleSendMessage} className="flex gap-3">
+            <input 
+              type="text" 
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Type your message..." 
+              className="flex-1 glass-input text-xs rounded-full py-2 px-4 bg-gray-50 border-gray-205"
+            />
+            <button 
+              type="submit"
+              className="bg-violet-600 hover:bg-violet-755 text-white p-2.5 rounded-full transition-colors shadow-sm shrink-0"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </footer>
+      </div>
     </div>
   );
 }

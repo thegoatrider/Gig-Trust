@@ -218,12 +218,12 @@ export default function WorkerOnboarding() {
   ];
 
   return (
-    <div className="min-h-screen text-slate-100 bg-slate-950 font-sans py-12 px-6">
+    <div className="min-h-screen text-gray-700 bg-[#F6F7F9] font-sans py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold font-outfit text-white text-center mb-2">
+        <h1 className="text-3xl font-bold font-outfit text-gray-900 text-center mb-2">
           Worker Onboarding Wizard
         </h1>
-        <p className="text-slate-400 text-center text-sm mb-8">
+        <p className="text-gray-500 text-center text-sm mb-8">
           Complete the steps to activate your marketplace account and unlock verified job bookings.
         </p>
 
@@ -239,14 +239,14 @@ export default function WorkerOnboarding() {
                 key={idx}
                 className={`glass-panel p-3 rounded-xl border flex flex-col items-center justify-center text-center transition-all ${
                   isActive 
-                    ? 'border-violet-500 bg-violet-500/10' 
+                    ? 'border-violet-500 bg-violet-50 text-violet-800' 
                     : isCompleted 
-                    ? 'border-emerald-500/50 bg-emerald-500/5' 
-                    : 'border-white/5 opacity-55'
+                    ? 'border-emerald-500/20 bg-emerald-50 text-emerald-800' 
+                    : 'border-gray-200/60 bg-gray-50 opacity-60'
                 }`}
               >
-                <Icon className={`w-5 h-5 mb-1.5 ${isActive ? 'text-violet-400' : isCompleted ? 'text-emerald-400' : 'text-slate-400'}`} />
-                <span className="text-[10px] font-bold uppercase tracking-wider block text-slate-300">{s.label}</span>
+                <Icon className={`w-5 h-5 mb-1.5 ${isActive ? 'text-violet-500' : isCompleted ? 'text-emerald-500' : 'text-gray-400'}`} />
+                <span className="text-[10px] font-bold uppercase tracking-wider block text-gray-700">{s.label}</span>
               </div>
             );
           })}
@@ -254,50 +254,50 @@ export default function WorkerOnboarding() {
 
         {/* Alert banners */}
         {error && (
-          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-400">
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 font-semibold">
             {error}
           </div>
         )}
         {success && (
-          <div className="mb-6 p-4 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-400">
+          <div className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-700 font-semibold">
             {success}
           </div>
         )}
 
         {/* Form Container */}
-        <div className="glass-panel p-8 rounded-2xl shadow-xl border border-white/5 mb-8">
+        <div className="glass-panel p-8 rounded-2xl shadow-sm border border-gray-100 mb-8">
           {/* STEP 1: IDENTITY & FACE MATCH */}
           {step === 1 && (
             <div className="space-y-8 animate-fade-in">
               <div>
-                <h3 className="text-lg font-bold text-white mb-2">1. Identity Verification</h3>
-                <p className="text-xs text-slate-400">Choose instant DigiLocker sync for Gold/Silver validation, or manually upload and run OCR scanner fallback.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">1. Identity Verification</h3>
+                <p className="text-xs text-gray-500">Choose instant DigiLocker sync for Gold/Silver validation, or manually upload and run OCR scanner fallback.</p>
               </div>
 
               {/* DigiLocker Option */}
-              <div className="p-5 rounded-xl bg-violet-500/5 border border-violet-500/20 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="p-5 rounded-xl bg-violet-50 border border-violet-100 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
-                  <h4 className="text-sm font-bold text-white mb-1">Method A: Connect DigiLocker (Recommended)</h4>
-                  <p className="text-xs text-slate-400">Pulls official verified documents. Silver badge instantly unlocked.</p>
+                  <h4 className="text-sm font-bold text-violet-950 mb-1">Method A: Connect DigiLocker (Recommended)</h4>
+                  <p className="text-xs text-violet-700 font-medium">Pulls official verified documents. Silver badge instantly unlocked.</p>
                 </div>
                 <button
                   type="button"
                   onClick={handleDigiLockerSimulate}
-                  className="bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold py-2 px-4 rounded-lg flex items-center gap-1.5 transition-colors"
+                  className="bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold py-2 px-4 rounded-lg flex items-center gap-1.5 transition-colors"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" /> Connect DigiLocker API
                 </button>
               </div>
 
-              <div className="text-center text-xs text-slate-500 font-semibold my-2">-- OR --</div>
+              <div className="text-center text-xs text-gray-400 font-semibold my-2">-- OR --</div>
 
               {/* Manual Upload Fallback */}
-              <div className="space-y-4 p-5 rounded-xl bg-white/5 border border-white/5">
-                <h4 className="text-sm font-bold text-white">Method B: Manual Document Upload (OCR Scanner)</h4>
+              <div className="space-y-4 p-5 rounded-xl bg-gray-50 border border-gray-150">
+                <h4 className="text-sm font-bold text-gray-800">Method B: Manual Document Upload (OCR Scanner)</h4>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Document Type</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Document Type</label>
                     <select 
                       value={idDocType} 
                       onChange={(e) => setIdDocType(e.target.value as any)}
@@ -310,7 +310,7 @@ export default function WorkerOnboarding() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Document ID Number</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Document ID Number</label>
                     <input 
                       type="text" 
                       value={idNumber}
@@ -325,37 +325,37 @@ export default function WorkerOnboarding() {
                   <button
                     type="button"
                     onClick={handleOcrSimulate}
-                    className="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors border border-white/5"
+                    className="w-full bg-white hover:bg-gray-50 text-gray-700 text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors border border-gray-200"
                   >
-                    <Upload className="w-4 h-4 text-slate-400" /> Simulate OCR Extract
+                    <Upload className="w-4 h-4 text-gray-400" /> Simulate OCR Extract
                   </button>
                 </div>
               </div>
 
               {/* Face Match check */}
-              <div className="pt-6 border-t border-white/5 space-y-4">
-                <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Camera className="w-5 h-5 text-violet-400" /> Face Match Attendance Safety
+              <div className="pt-6 border-t border-gray-100 space-y-4">
+                <h4 className="text-sm font-bold text-gray-800 flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-violet-600" /> Face Match Attendance Safety
                 </h4>
-                <p className="text-xs text-slate-400">Upload a selfie to compare against your document photo. Prevents proxy workers from attending gigs.</p>
+                <p className="text-xs text-gray-500">Upload a selfie to compare against your document photo. Prevents proxy workers from attending gigs.</p>
                 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 p-6 border-2 border-dashed border-white/10 rounded-xl bg-slate-900/30">
-                  <div className="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center border border-white/5 text-slate-400 relative overflow-hidden">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 p-6 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50">
+                  <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 text-gray-400 relative overflow-hidden">
                     {selfieUploaded ? (
-                      <span className="text-[10px] text-emerald-400 font-semibold uppercase">Selfie Loaded</span>
+                      <span className="text-[10px] text-emerald-600 font-bold uppercase">Selfie Loaded</span>
                     ) : (
-                      <Camera className="w-8 h-8" />
+                      <Camera className="w-8 h-8 text-gray-300" />
                     )}
                   </div>
                   <div className="text-center sm:text-left space-y-2">
                     <button
                       type="button"
                       onClick={handleSelfieSimulate}
-                      className="bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold py-2 px-4 rounded-lg transition-all shadow"
+                      className="bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold py-2 px-4 rounded-lg transition-all shadow-sm"
                     >
                       Capture Live Selfie
                     </button>
-                    <p className="text-[10px] text-slate-500">Camera permission will open. Simulated face validation scoring applied.</p>
+                    <p className="text-[10px] text-gray-400 font-medium">Camera permission will open. Simulated face validation scoring applied.</p>
                   </div>
                 </div>
               </div>
@@ -366,13 +366,13 @@ export default function WorkerOnboarding() {
           {step === 2 && (
             <div className="space-y-6 animate-fade-in">
               <div>
-                <h3 className="text-lg font-bold text-white mb-2">2. Work Radius & Coordinates</h3>
-                <p className="text-xs text-slate-400">Input your base home address to match gigs within your immediate travel radius.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">2. Work Radius & Coordinates</h3>
+                <p className="text-xs text-gray-500">Input your base home address to match gigs within your immediate travel radius.</p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 mb-1.5">Primary Residence Address</label>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1.5">Primary Residence Address</label>
                   <textarea 
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
@@ -384,33 +384,33 @@ export default function WorkerOnboarding() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Latitude coordinate</label>
+                    <label className="block text-xs font-semibold text-gray-600 mb-1">Latitude coordinate</label>
                     <input 
                       type="number" 
                       step="any"
                       value={lat}
                       onChange={(e) => setLat(parseFloat(e.target.value))}
-                      className="w-full glass-input text-xs bg-slate-900/40" 
+                      className="w-full glass-input text-xs bg-gray-50" 
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Longitude coordinate</label>
+                    <label className="block text-xs font-semibold text-gray-600 mb-1">Longitude coordinate</label>
                     <input 
                       type="number" 
                       step="any"
                       value={lng}
                       onChange={(e) => setLng(parseFloat(e.target.value))}
-                      className="w-full glass-input text-xs bg-slate-900/40" 
+                      className="w-full glass-input text-xs bg-gray-50" 
                     />
                   </div>
                 </div>
 
                 {/* Leaflet/OSM Fallback visual */}
-                <div className="h-44 rounded-xl bg-slate-900 border border-white/5 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-slate-900/50 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+                <div className="h-44 rounded-xl bg-gray-50 border border-gray-200 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gray-100/50 bg-[radial-gradient(#00000008_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
                   <MapPin className="w-8 h-8 text-rose-500 mb-2 animate-bounce" />
-                  <span className="text-xs text-slate-300 font-bold">Bangalore Center coordinates Selected</span>
-                  <span className="text-[10px] text-slate-500 mt-1">Geocoding synced. Radius check will restrict check-ins outside 200m bounds.</span>
+                  <span className="text-xs text-gray-800 font-bold">Bangalore Center coordinates Selected</span>
+                  <span className="text-[10px] text-gray-400 mt-1">Geocoding synced. Radius check will restrict check-ins outside 200m bounds.</span>
                 </div>
               </div>
             </div>
@@ -420,16 +420,16 @@ export default function WorkerOnboarding() {
           {step === 3 && (
             <div className="space-y-6 animate-fade-in">
               <div>
-                <h3 className="text-lg font-bold text-white mb-2">3. Experience & Credentials</h3>
-                <p className="text-xs text-slate-400">Provide education details and recent gig/work records to showcase on your profile.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">3. Experience & Credentials</h3>
+                <p className="text-xs text-gray-500">Provide education details and recent gig/work records to showcase on your profile.</p>
               </div>
 
               {/* Education section */}
-              <div className="space-y-4 p-5 rounded-xl bg-white/5 border border-white/5">
-                <h4 className="text-sm font-bold text-violet-400">Education Details</h4>
+              <div className="space-y-4 p-5 rounded-2xl bg-gray-50 border border-gray-150">
+                <h4 className="text-sm font-bold text-violet-600">Education Details</h4>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="col-span-2">
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">School / University</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">School / University</label>
                     <input 
                       type="text" 
                       value={eduSchool}
@@ -439,7 +439,7 @@ export default function WorkerOnboarding() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Year of Passing</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Year of Passing</label>
                     <input 
                       type="text" 
                       value={eduYear}
@@ -450,7 +450,7 @@ export default function WorkerOnboarding() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 mb-1">Degree Course</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1">Degree Course</label>
                   <input 
                     type="text" 
                     value={eduDegree}
@@ -462,11 +462,11 @@ export default function WorkerOnboarding() {
               </div>
 
               {/* Experience section */}
-              <div className="space-y-4 p-5 rounded-xl bg-white/5 border border-white/5">
-                <h4 className="text-sm font-bold text-amber-400">Work Experience</h4>
+              <div className="space-y-4 p-5 rounded-2xl bg-gray-50 border border-gray-150">
+                <h4 className="text-sm font-bold text-amber-600">Work Experience</h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Company / App Partner</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Company / App Partner</label>
                     <input 
                       type="text" 
                       value={expCompany}
@@ -476,7 +476,7 @@ export default function WorkerOnboarding() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Role / Job Title</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Role / Job Title</label>
                     <input 
                       type="text" 
                       value={expRole}
@@ -487,7 +487,7 @@ export default function WorkerOnboarding() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 mb-1">Employment Duration</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1">Employment Duration</label>
                   <input 
                     type="text" 
                     value={expDuration}
@@ -504,36 +504,36 @@ export default function WorkerOnboarding() {
           {step === 4 && (
             <div className="space-y-6 animate-fade-in">
               <div>
-                <h3 className="text-lg font-bold text-white mb-2">4. Safety Contacts & Private Medical Info</h3>
-                <p className="text-xs text-slate-400">Your medical conditions and emergency guardian contacts are strictly confidential. Visible only to Admins and triggered during active SOS alerts.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">4. Safety Contacts & Private Medical Info</h3>
+                <p className="text-xs text-gray-500">Your medical conditions and emergency guardian contacts are strictly confidential. Visible only to Admins and triggered during active SOS alerts.</p>
               </div>
 
               {/* Medical field */}
-              <div className="p-4 rounded-xl bg-red-950/10 border border-red-500/20">
-                <label className="block text-xs font-bold text-red-400 mb-2 uppercase tracking-wider flex items-center gap-1.5">
-                  <ShieldAlert className="w-4 h-4" /> Medical Conditions (Private Column)
+              <div className="p-4 rounded-xl bg-red-50 border border-red-200">
+                <label className="block text-xs font-bold text-red-650 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+                  <ShieldAlert className="w-4 h-4 text-red-650" /> Medical Conditions (Private Column)
                 </label>
                 <textarea 
                   value={medical}
                   onChange={(e) => setMedical(e.target.value)}
                   rows={2}
-                  className="w-full glass-input text-xs border-red-500/20 focus:border-red-500"
+                  className="w-full glass-input text-xs border-red-200 focus:border-red-500"
                   placeholder="Detail any conditions, allergies, or emergency directives here. NEVER shown publicly."
                 />
               </div>
 
               {/* 3 Guardian contacts */}
               <div className="space-y-4">
-                <h4 className="text-sm font-bold text-white">Required Safety Contacts (Exactly 3)</h4>
+                <h4 className="text-sm font-bold text-gray-850">Required Safety Contacts (Exactly 3)</h4>
                 
                 {guardians.map((g, idx) => (
-                  <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+                  <div key={idx} className="p-4 rounded-2xl bg-gray-50 border border-gray-150 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-400">Emergency Contact #{idx + 1}</span>
+                      <span className="text-xs font-bold text-gray-500">Emergency Contact #{idx + 1}</span>
                       <select
                         value={g.relation_type}
                         onChange={(e) => handleGuardianChange(idx, 'relation_type', e.target.value)}
-                        className="text-[10px] bg-slate-900 border border-white/10 rounded px-2 py-0.5"
+                        className="text-[10px] bg-white border border-gray-200 rounded px-2.5 py-1 font-semibold text-gray-700"
                       >
                         <option value="blood">Blood Relative</option>
                         <option value="other">Other relation</option>
@@ -577,13 +577,13 @@ export default function WorkerOnboarding() {
           {step === 5 && (
             <div className="space-y-6 animate-fade-in">
               <div>
-                <h3 className="text-lg font-bold text-white mb-2">5. Skill Badges & Workspace Formats</h3>
-                <p className="text-xs text-slate-400">Select the skills you want to display to employers and pick your preferred working formats.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">5. Skill Badges & Workspace Formats</h3>
+                <p className="text-xs text-gray-500">Select the skills you want to display to employers and pick your preferred working formats.</p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 mb-3">Preferred Skill Badges (Select all that apply)</label>
+                  <label className="block text-xs font-semibold text-gray-600 mb-3">Preferred Skill Badges (Select all that apply)</label>
                   <div className="flex flex-wrap gap-2">
                     {availableSkills.map((skill, idx) => {
                       const isSelected = selectedSkills.includes(skill);
@@ -592,10 +592,10 @@ export default function WorkerOnboarding() {
                           key={idx}
                           type="button"
                           onClick={() => handleSkillToggle(skill)}
-                          className={`px-3 py-1.5 rounded-full border text-xs font-semibold transition-all ${
+                          className={`px-3.5 py-1.5 rounded-full border text-xs font-semibold transition-all ${
                             isSelected 
-                              ? 'bg-violet-500/20 border-violet-500 text-violet-300' 
-                              : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10'
+                              ? 'bg-violet-50 border-violet-500 text-violet-700' 
+                              : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50 shadow-sm'
                           }`}
                         >
                           {isSelected ? '✓ ' : ''}{skill}
@@ -605,8 +605,8 @@ export default function WorkerOnboarding() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
-                  <label className="block text-xs font-semibold text-slate-400 mb-3">Work Mode Preference</label>
+                <div className="pt-4 border-t border-gray-150">
+                  <label className="block text-xs font-semibold text-gray-600 mb-3">Work Mode Preference</label>
                   <div className="grid grid-cols-3 gap-4">
                     {[
                       { value: 'online', label: 'Online Only', desc: 'Remote jobs' },
@@ -617,14 +617,14 @@ export default function WorkerOnboarding() {
                         key={idx}
                         type="button"
                         onClick={() => setWorkMode(mode.value as any)}
-                        className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center ${
+                        className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center ${
                           workMode === mode.value 
-                            ? 'bg-violet-500/10 border-violet-500 text-white' 
-                            : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10'
+                            ? 'bg-violet-50 border-violet-500 text-violet-950 font-bold' 
+                            : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50 shadow-sm'
                         }`}
                       >
                         <span className="text-xs font-bold block">{mode.label}</span>
-                        <span className="text-[9px] text-slate-500 mt-0.5">{mode.desc}</span>
+                        <span className="text-[9px] text-gray-400 mt-0.5">{mode.desc}</span>
                       </button>
                     ))}
                   </div>
@@ -638,33 +638,33 @@ export default function WorkerOnboarding() {
             <div className="space-y-6 text-center py-6 animate-fade-in">
               <Coins className="w-16 h-16 text-amber-500 mx-auto animate-pulse-slow" />
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">6. Unlock Silver Trust Badge</h3>
-                <p className="text-xs text-slate-400 max-w-lg mx-auto">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">6. Unlock Silver Trust Badge</h3>
+                <p className="text-xs text-gray-500 max-w-lg mx-auto">
                   A ₹500 security deposit hold is required to activate Silver verification. Locks commitment, reduces client no-shows, and is fully refundable on account closure.
                 </p>
               </div>
 
-              <div className="glass-panel p-6 rounded-xl max-w-sm mx-auto border border-white/5">
-                <div className="text-slate-400 text-xs uppercase tracking-wider mb-1">One-Time Refundable Deposit</div>
-                <div className="text-4xl font-extrabold text-white mb-4">₹500.00</div>
+              <div className="glass-panel p-6 rounded-2xl max-w-sm mx-auto border border-gray-200 shadow-sm">
+                <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">One-Time Refundable Deposit</div>
+                <div className="text-4xl font-extrabold text-gray-900 mb-4">₹500.00</div>
                 
                 {depositCompleted ? (
-                  <div className="py-2.5 px-4 bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-lg flex items-center justify-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" /> Deposit Locked in Wallet
+                  <div className="py-2.5 px-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold rounded-lg flex items-center justify-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Deposit Locked in Wallet
                   </div>
                 ) : (
                   <button
                     type="button"
                     onClick={handleSimulatePayment}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"
+                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
                   >
                     Pay ₹500 via Razorpay (Demo Mode)
                   </button>
                 )}
               </div>
 
-              <div className="text-[10px] text-slate-500 max-w-md mx-auto flex items-center gap-1.5 justify-center">
-                <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <div className="text-[10px] text-gray-400 max-w-md mx-auto flex items-center gap-1.5 justify-center font-medium">
+                <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
                 You can proceed with Bronze tier without depositing, but Silver grants higher payouts.
               </div>
             </div>
@@ -677,7 +677,7 @@ export default function WorkerOnboarding() {
             type="button"
             disabled={step === 1 || loading}
             onClick={() => setStep(step - 1)}
-            className="px-6 py-3 rounded-xl border border-white/5 text-slate-400 hover:text-white hover:bg-white/5 transition-all text-xs font-semibold flex items-center gap-1.5 disabled:opacity-30 disabled:pointer-events-none"
+            className="px-6 py-3 rounded-xl border border-gray-200 bg-white text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-all text-xs font-semibold flex items-center gap-1.5 disabled:opacity-30 disabled:pointer-events-none shadow-sm"
           >
             <ArrowLeft className="w-4 h-4" /> Previous Step
           </button>
@@ -686,7 +686,7 @@ export default function WorkerOnboarding() {
             type="button"
             disabled={loading}
             onClick={handleSaveAndNext}
-            className="px-8 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-violet-500/10"
+            className="px-8 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition-all text-xs font-semibold flex items-center gap-1.5 shadow-md"
           >
             {step === 6 ? (loading ? "Completing..." : "Complete Registration") : "Save & Continue"}
             <ArrowRight className="w-4 h-4" />
