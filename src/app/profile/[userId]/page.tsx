@@ -48,7 +48,7 @@ export default function ProfilePage({ params }: { params: { userId: string } }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-400 text-sm">
+      <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center text-gray-500 text-sm font-semibold">
         Syncing Trust Credentials...
       </div>
     );
@@ -56,9 +56,9 @@ export default function ProfilePage({ params }: { params: { userId: string } }) 
 
   const isAdmin = currentUserRole === "admin";
   const getBadgeColor = (tier: string) => {
-    if (tier === 'gold') return 'border-amber-500 bg-amber-500/10 text-amber-400';
-    if (tier === 'silver') return 'border-slate-300 bg-slate-300/10 text-slate-300';
-    return 'border-orange-500 bg-orange-500/10 text-orange-400';
+    if (tier === 'gold') return 'border-amber-400 bg-amber-50 text-amber-800 font-extrabold';
+    if (tier === 'silver') return 'border-slate-300 bg-slate-100 text-slate-700 font-extrabold';
+    return 'border-orange-200 bg-orange-50 text-orange-850 font-extrabold';
   };
 
   return (

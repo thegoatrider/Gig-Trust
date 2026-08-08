@@ -176,7 +176,7 @@ export default function ActiveSession() {
 
   if (loading && !data) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-400 text-sm">
+      <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center text-gray-500 text-sm font-semibold">
         Syncing active session...
       </div>
     );

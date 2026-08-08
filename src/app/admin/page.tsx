@@ -108,7 +108,7 @@ export default function AdminPage() {
 
   if (loading && users.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-400 text-sm">
+      <div className="min-h-screen bg-[#F6F7F9] flex items-center justify-center text-gray-500 text-sm font-semibold">
         Verifying administrator credentials...
       </div>
     );
@@ -119,36 +119,36 @@ export default function AdminPage() {
   const activeGigCount = users.filter(u => u.kyc_status === 'gold').length; // dummy mapping
 
   return (
-    <div className="min-h-screen text-slate-200 bg-slate-950 font-sans pb-16">
+    <div className="min-h-screen text-gray-700 bg-[#F6F7F9] font-sans pb-16">
       {/* Header */}
-      <header className="glass-panel sticky top-0 z-40 border-b border-white/5 backdrop-blur px-6 py-4 flex items-center justify-between">
+      <header className="bg-white sticky top-0 z-40 border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
-          <Link href="/" className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors">
+          <Link href="/" className="p-1.5 hover:bg-gray-100 rounded-full text-gray-500 hover:text-gray-900 transition-colors">
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <h1 className="text-xl font-bold font-outfit text-white">Central Operations Deck</h1>
+          <h1 className="text-lg font-black font-outfit text-gray-900">Central Operations Deck</h1>
         </div>
-        <button onClick={fetchData} className="p-2 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10">
-          <RefreshCw className="w-4 h-4 text-slate-400 hover:text-white" />
+        <button onClick={fetchData} className="p-1.5 hover:bg-gray-100 rounded-full">
+          <RefreshCw className="w-4 h-4 text-gray-500 hover:text-gray-900" />
         </button>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pt-8 space-y-6">
         {error && (
-          <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-400 flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 shrink-0 text-red-400" />
+          <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-700 flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-red-650" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="p-4 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-400 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-emerald-400" /> {success}
+          <div className="p-4 bg-emerald-50 border border-emerald-250 rounded-2xl text-xs text-emerald-700 font-bold flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-emerald-600" /> {success}
           </div>
         )}
 
         {/* Tab Router Buttons */}
-        <div className="grid grid-cols-4 gap-4 border-b border-white/5 pb-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-gray-200 pb-4">
           {[
             { id: 'verifications', label: 'KYC Verification Reviews', icon: ShieldCheck },
             { id: 'disputes', label: 'Escrow Disputes', icon: Scale },
@@ -161,10 +161,10 @@ export default function AdminPage() {
                 key={idx}
                 type="button"
                 onClick={() => setActiveTab(t.id as any)}
-                className={`py-3 rounded-xl text-xs font-semibold flex flex-col md:flex-row items-center justify-center gap-2 transition-all border ${
+                className={`py-3 rounded-2xl text-xs font-bold flex flex-col md:flex-row items-center justify-center gap-2 transition-all border ${
                   activeTab === t.id
-                    ? 'bg-amber-500/10 border-amber-500 text-amber-400'
-                    : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                    ? 'bg-amber-50 border-amber-500 text-amber-900'
+                    : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
                 <Icon className="w-4 h-4" /> {t.label}
@@ -175,18 +175,18 @@ export default function AdminPage() {
 
         {/* 1. TABS: VERIFICATIONS */}
         {activeTab === 'verifications' && (
-          <div className="glass-panel p-6 rounded-2xl border border-white/5 space-y-6 animate-fade-in">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">KYC Document Reviews</h3>
+          <div className="bg-white p-6 rounded-[28px] border border-gray-150 shadow-sm space-y-6 animate-fade-in">
+            <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider">KYC Document Reviews</h3>
             <div className="space-y-4">
               {users.filter(u => u.role === 'worker' || u.role === 'employer').map((u, idx) => (
-                <div key={idx} className="p-4 bg-white/5 border border-white/5 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div key={idx} className="p-4 bg-gray-50 border border-gray-150 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-white text-xs">{u.email}</h4>
-                      <span className="text-[9px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded capitalize">{u.role}</span>
+                      <h4 className="font-bold text-gray-900 text-xs">{u.email}</h4>
+                      <span className="text-[9px] bg-gray-200 text-gray-650 px-2 py-0.5 rounded capitalize font-bold">{u.role}</span>
                     </div>
-                    <div className="text-[10px] text-slate-400 mt-2 space-y-1">
-                      <p>KYC Tier: <strong className="text-white capitalize">{u.kyc_status}</strong> (Score: {u.trust_score})</p>
+                    <div className="text-[10px] text-gray-500 mt-2 space-y-1 font-semibold">
+                      <p>KYC Tier: <strong className="text-gray-850 capitalize">{u.kyc_status}</strong> (Score: {u.trust_score})</p>
                       {u.profile && (
                         <p>ID type: {u.profile.id_doc_type || 'N/A'} (Verified: {u.profile.id_verified ? 'Yes' : 'No'})</p>
                       )}
@@ -196,13 +196,13 @@ export default function AdminPage() {
                   <div className="flex items-center gap-2.5">
                     <button
                       onClick={() => handleKycAction(u.id, 'silver')}
-                      className="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white rounded text-[10px] font-bold"
+                      className="py-1.5 px-3 bg-gray-850 hover:bg-gray-900 text-white rounded-lg text-[10px] font-bold shadow-sm"
                     >
                       Approve Silver
                     </button>
                     <button
                       onClick={() => handleKycAction(u.id, 'gold')}
-                      className="py-1.5 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded text-[10px] font-bold"
+                      className="py-1.5 px-3 bg-amber-500 hover:bg-amber-600 text-gray-950 rounded-lg text-[10px] font-bold shadow-sm"
                     >
                       Approve Gold (Background Check)
                     </button>
@@ -215,28 +215,28 @@ export default function AdminPage() {
 
         {/* 2. TABS: DISPUTES */}
         {activeTab === 'disputes' && (
-          <div className="glass-panel p-6 rounded-2xl border border-white/5 space-y-6 animate-fade-in">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-outfit">Escrow Dispute Panel</h3>
+          <div className="bg-white p-6 rounded-[28px] border border-gray-150 shadow-sm space-y-6 animate-fade-in">
+            <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider font-outfit">Escrow Dispute Panel</h3>
             {disputes.length === 0 ? (
-              <div className="py-8 text-center text-slate-500 text-xs">
+              <div className="py-8 text-center text-gray-400 text-xs font-semibold">
                 No unresolved escrow disputes pending.
               </div>
             ) : (
               <div className="space-y-4">
                 {disputes.map((d, idx) => (
-                  <div key={idx} className="p-5 bg-white/5 border border-white/5 rounded-xl space-y-4">
-                    <div className="flex items-start justify-between border-b border-white/5 pb-3">
+                  <div key={idx} className="p-5 bg-gray-50 border border-gray-150 rounded-2xl space-y-4">
+                    <div className="flex items-start justify-between border-b border-gray-200/80 pb-3">
                       <div>
-                        <span className="text-[9px] bg-red-500/10 text-red-400 border border-red-500/25 px-2 py-0.5 rounded uppercase tracking-wider font-bold">
+                        <span className="text-[9px] bg-red-550/10 text-red-700 border border-red-200 px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">
                           Dispute Status: {d.status}
                         </span>
-                        <h4 className="font-bold text-white text-xs mt-2">Disputed Session: {d.session_id}</h4>
-                        <p className="text-[10px] text-slate-400 mt-1">Raised by: {d.raisedByName}</p>
+                        <h4 className="font-extrabold text-gray-900 text-xs mt-2">Disputed Session: {d.session_id}</h4>
+                        <p className="text-[10px] text-gray-500 mt-1 font-semibold">Raised by: {d.raisedByName}</p>
                       </div>
-                      <span className="text-xl font-extrabold text-white">₹{d.amount || 'Escrow Locked'}</span>
+                      <span className="text-base font-black text-gray-900">₹{d.amount || 'Escrow Locked'}</span>
                     </div>
 
-                    <div className="text-xs text-slate-300 leading-relaxed bg-slate-950 p-3 rounded-lg border border-white/5">
+                    <div className="text-xs text-gray-700 leading-relaxed bg-white p-3 rounded-xl border border-gray-200 font-semibold">
                       <strong>Filing Reason:</strong> "{d.reason}"
                     </div>
 
@@ -244,13 +244,13 @@ export default function AdminPage() {
                       <div className="flex justify-end gap-3 pt-2">
                         <button
                           onClick={() => handleDisputeAction(d.id, 'refund_employer')}
-                          className="py-1.5 px-4 bg-slate-800 hover:bg-slate-700 text-white rounded text-[10px] font-bold"
+                          className="py-1.5 px-4 bg-gray-805 hover:bg-gray-900 text-white rounded-lg text-[10px] font-bold"
                         >
                           Refund 100% to Employer
                         </button>
                         <button
                           onClick={() => handleDisputeAction(d.id, 'payout_worker')}
-                          className="py-1.5 px-4 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded text-[10px] font-bold"
+                          className="py-1.5 px-4 bg-amber-500 hover:bg-amber-600 text-gray-950 rounded-lg text-[10px] font-bold"
                         >
                           Release 100% to Worker Escrow
                         </button>
@@ -265,29 +265,29 @@ export default function AdminPage() {
 
         {/* 3. TABS: STRIKES */}
         {activeTab === 'strikes' && (
-          <div className="glass-panel p-6 rounded-2xl border border-white/5 space-y-6 animate-fade-in">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">Issue Reliability Strikes</h3>
+          <div className="bg-white p-6 rounded-[28px] border border-gray-150 shadow-sm space-y-6 animate-fade-in">
+            <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider">Issue Reliability Strikes</h3>
             
             <form onSubmit={handleIssueStrike} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Target User ID (UUID)</label>
+                <label className="block text-[10px] font-bold text-gray-450 uppercase mb-1">Target User ID (UUID)</label>
                 <input 
                   type="text" 
                   value={strikeUserId}
                   onChange={(e) => setStrikeUserId(e.target.value)}
                   placeholder="Paste User UUID" 
-                  className="w-full glass-input text-xs py-2"
+                  className="w-full glass-input text-xs py-2 bg-gray-50 border-gray-200"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Penalty Reason</label>
+                <label className="block text-[10px] font-bold text-gray-450 uppercase mb-1">Penalty Reason</label>
                 <input 
                   type="text" 
                   value={strikeReason}
                   onChange={(e) => setStrikeReason(e.target.value)}
                   placeholder="e.g. Gig Late No-Show" 
-                  className="w-full glass-input text-xs py-2"
+                  className="w-full glass-input text-xs py-2 bg-gray-50 border-gray-200"
                 />
               </div>
 
@@ -299,9 +299,9 @@ export default function AdminPage() {
               </button>
             </form>
 
-            <div className="pt-6 border-t border-white/5">
-              <span className="text-xs text-slate-400 block mb-3">Guidelines:</span>
-              <ul className="text-[10px] text-slate-500 space-y-1.5 list-disc pl-4">
+            <div className="pt-6 border-t border-gray-200">
+              <span className="text-xs text-gray-700 block mb-3 font-bold">Guidelines:</span>
+              <ul className="text-[10px] text-gray-500 space-y-1.5 list-disc pl-4 font-semibold">
                 <li>Strikes deduct 15 points from their Trust Score automatically.</li>
                 <li>Accumulating 3 strikes within 30 days locks the worker profile, preventing new gig acceptances.</li>
               </ul>
@@ -311,26 +311,26 @@ export default function AdminPage() {
 
         {/* 4. TABS: ANALYTICS */}
         {activeTab === 'analytics' && (
-          <div className="glass-panel p-6 rounded-2xl border border-white/5 space-y-6 animate-fade-in">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">Financial & System Health</h3>
+          <div className="bg-white p-6 rounded-[28px] border border-gray-150 shadow-sm space-y-6 animate-fade-in">
+            <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider">Financial & System Health</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
-                <Coins className="w-6 h-6 text-violet-400 mb-2" />
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider">Locked Escrow Pool</span>
-                <h4 className="text-2xl font-extrabold text-white mt-1">₹4,820.00</h4>
+              <div className="p-5 bg-gray-50 border border-gray-150 rounded-2xl">
+                <Coins className="w-6 h-6 text-violet-650 mb-2" />
+                <span className="text-[9px] text-gray-450 uppercase tracking-wider font-extrabold">Locked Escrow Pool</span>
+                <h4 className="text-2xl font-black text-gray-900 mt-1">₹4,820.00</h4>
               </div>
 
-              <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
-                <Scale className="w-6 h-6 text-emerald-400 mb-2" />
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider">Platform Commissions</span>
-                <h4 className="text-2xl font-extrabold text-white mt-1">₹723.00</h4>
+              <div className="p-5 bg-gray-50 border border-gray-150 rounded-2xl">
+                <Scale className="w-6 h-6 text-emerald-650 mb-2" />
+                <span className="text-[9px] text-gray-450 uppercase tracking-wider font-extrabold">Platform Commissions</span>
+                <h4 className="text-2xl font-black text-gray-900 mt-1">₹723.00</h4>
               </div>
 
-              <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
-                <ShieldCheck className="w-6 h-6 text-amber-400 mb-2" />
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider">Verified Badges Issued</span>
-                <h4 className="text-2xl font-extrabold text-white mt-1">{users.length}</h4>
+              <div className="p-5 bg-gray-50 border border-gray-150 rounded-2xl">
+                <ShieldCheck className="w-6 h-6 text-amber-600 mb-2" />
+                <span className="text-[9px] text-gray-450 uppercase tracking-wider font-extrabold">Verified Badges Issued</span>
+                <h4 className="text-2xl font-black text-gray-900 mt-1">{users.length}</h4>
               </div>
             </div>
           </div>
